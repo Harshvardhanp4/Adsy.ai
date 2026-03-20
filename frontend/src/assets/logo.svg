@@ -1,0 +1,21 @@
+<svg width="400" height="80" viewBox="0 0 400 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="aiGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#A5B4FC" />
+      <stop offset="100%" stop-color="#6366F1" />
+    </linearGradient>
+  </defs>
+
+  <g transform="translate(10, 10)">
+    <path d="M0 20C0 8.95 8.95 0 20 0H50C61.05 0 70 8.95 70 20V42C70 47.52 65.52 52 60 52H0V20Z" fill="#4F46E5"/>
+    <rect x="8" y="10" width="48" height="34" rx="17" fill="#A5B4FC"/>
+    <circle cx="23" cy="27" r="6" fill="black"/>
+    <circle cx="21.5" cy="24.5" r="1.5" fill="white"/>
+    <circle cx="43" cy="27" r="6" fill="black"/>
+    <circle cx="41.5" cy="24.5" r="1.5" fill="white"/>
+  </g>
+  
+  <text x="95" y="52" font-family="Arial, sans-serif" font-weight="900" font-size="44" letter-spacing="-1.5">
+    <tspan fill="#FFFFFF">ADSY</tspan><tspan fill="url(#aiGradient)">.AI</tspan>
+  </text>
+</svg>
