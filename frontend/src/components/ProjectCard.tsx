@@ -2,7 +2,6 @@ import { useNavigate } from "react-router-dom"
 import type { Project } from "../types"
 import { useState } from "react";
 import { EllipsisIcon, ImageIcon, Loader2Icon, PlaySquareIcon, Share2Icon, Trash2Icon } from "lucide-react";
-import { div } from "framer-motion/client";
 import { GhostButton, PrimaryButton } from "./Buttons";
 
 
@@ -54,7 +53,7 @@ const ProjectCard = ({ gen, setGenerations, forCommunity = false }: { gen: Proje
                     </div>
 
                     {/* Action Menu for my generations     */}
-                    {!forCommunity && (
+                    {forCommunity && (
                         <div
                             onMouseDownCapture={() => { setMenuOpen(true) }}
                             onMouseLeave={() => { setMenuOpen(false) }}
@@ -134,7 +133,7 @@ const ProjectCard = ({ gen, setGenerations, forCommunity = false }: { gen: Proje
 
                     {/* Buttons */}
                     {
-                        !forCommunity && (
+                        forCommunity && (
                             <div className="mt-4 grid grid-cols-2 gap-3">
                                 <GhostButton className="text-xs justify-center" onClick={() => { navigate(`/result/${gen.id}`); scrollTo(0, 0) }}>
                                     View Details
