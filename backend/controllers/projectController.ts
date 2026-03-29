@@ -94,7 +94,7 @@ export const createProject = async (req: Request, res: Response) => {
                     threshold: HarmBlockThreshold.OFF,
                 },
                 {
-                    category: HarmCategory.HARM_CATEGORY_IMAGE_SEXUALLY_EXPLICIT,
+                    category: HarmCategory.HARM_CATEGORY_SEXUALLY_EXPLICIT,
                     threshold: HarmBlockThreshold.OFF,
                 },
                 {
@@ -105,8 +105,8 @@ export const createProject = async (req: Request, res: Response) => {
         }
 
         // image to base64 structure for ai model
-        const img1base64 = loadImage(images[0].path, images[0].mimeType);
-        const img2base64 = loadImage(images[1].path, images[1].mimeType);
+        const img1base64 = loadImage(images[0].path, images[0].mimetype);
+        const img2base64 = loadImage(images[1].path, images[1].mimetype);
 
         //prompt
 
@@ -122,11 +122,11 @@ export const createProject = async (req: Request, res: Response) => {
             config: generationConfig,
         })
 
-        if (!response.canditates?.[0]?.content?.parts) {
+        if (!response.candidates?.[0]?.content?.parts) {
             throw new Error('Unexpected response')
         }
 
-        const parts = response.canditates[0].content.parts;
+        const parts = response.candidates[0].content.parts;
 
         let finalBuffer: Buffer | null = null
 
@@ -185,7 +185,8 @@ export const createProject = async (req: Request, res: Response) => {
         }
 
         Sentry.captureException(error);
-        res.status(500).json({ msg: error.msg });
+        console.error('createProject error:', error);
+        res.status(500).json({ message: error?.message || error?.msg || 'Internal Server Error' });
     }
 }
 
@@ -342,7 +343,8 @@ export const createVideo = async (req: Request, res: Response) => {
 
 
         Sentry.captureException(error);
-        res.status(500).json({ msg: error.msg });
+        console.error('createVideo error:', error);
+        res.status(500).json({ message: error?.message || error?.msg || 'Internal Server Error' });
     }
 }
 
@@ -356,7 +358,8 @@ export const getAllPublishedProjects = async (req: Request, res: Response) => {
 
     } catch (error: any) {
         Sentry.captureException(error);
-        res.status(500).json({ msg: error.msg });
+        console.error('getAllPublishedProjects error:', error);
+        res.status(500).json({ message: error?.message || error?.msg || 'Internal Server Error' });
     }
 }
 
@@ -388,6 +391,7 @@ export const deleteProject = async (req: Request, res: Response) => {
 
     } catch (error: any) {
         Sentry.captureException(error);
-        res.status(500).json({ msg: error.msg });
+        console.error('deleteProject error:', error);
+        res.status(500).json({ message: error?.message || error?.msg || 'Internal Server Error' });
     }
 }
