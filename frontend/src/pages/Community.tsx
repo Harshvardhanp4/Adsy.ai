@@ -4,6 +4,8 @@ import { Loader2Icon } from "lucide-react";
 import ProjectCard from "../components/ProjectCard";
 import api from "../config/axios";
 import toast from "react-hot-toast";
+import { dummyGenerations } from "../assets/assets";
+import { DEMO_MODE } from "../config/demo";
 
 
 const Community = () => {
@@ -12,6 +14,12 @@ const Community = () => {
 
 
   const fetchProjects = async () => {
+    if (DEMO_MODE) {
+      setProjects(dummyGenerations.filter((project) => project.isPublished))
+      setLoading(false)
+      return
+    }
+
     try {
       const { data } = await api.get('/api/project/published')
       setProjects(data.projects)

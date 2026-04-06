@@ -11,6 +11,7 @@ import Community from './pages/Community';
 import Plans from './pages/Plans';
 import Loading from './pages/Loading';
 import { Toaster } from 'react-hot-toast';
+import ServiceAnnouncement from './components/ServiceAnnouncement';
 
 
 function App() {
@@ -20,6 +21,7 @@ function App() {
 			<SoftBackdrop />
 			<LenisScroll />
 			<Navbar />
+			<ServiceAnnouncement />
 
 			<Routes>
 				<Route path='/' element={<Home />} />

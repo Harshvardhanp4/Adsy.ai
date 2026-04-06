@@ -7,6 +7,8 @@ import { useAuth, useUser } from "@clerk/react";
 import { useNavigate } from "react-router-dom";
 import api from "../config/axios";
 import toast from "react-hot-toast";
+import { dummyGenerations } from "../assets/assets";
+import { DEMO_MODE } from "../config/demo";
 
 
 
@@ -22,6 +24,12 @@ const MyGenerations = () => {
 
 
   const fetchMyGenerations = async () => {
+    if (DEMO_MODE) {
+      setGenerations(dummyGenerations)
+      setLoading(false)
+      return
+    }
+
     try {
       const token = await getToken();
       const { data } = await api.get('/api/user/projects', { headers: { Authorization: `Bearer ${token}` } })
@@ -36,13 +44,19 @@ const MyGenerations = () => {
 
 
   useEffect(() => {
+    if (DEMO_MODE) {
+      setGenerations(dummyGenerations)
+      setLoading(false)
+      return
+    }
+
     if (user) {
       fetchMyGenerations()
     } else if (isLoaded && !user) {
       navigate('/')
     }
 
-  }, [user])
+  }, [user, isLoaded])
 
 
   return loading ? (

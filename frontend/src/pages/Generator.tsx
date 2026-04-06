@@ -8,6 +8,8 @@ import { useNavigate } from "react-router-dom"
 import toast from "react-hot-toast"
 import api from "../config/axios"
 
+const GENERATION_ENABLED = false;
+const GENERATION_STATUS_MESSAGE = "We are currently upgrading our API. Generation will be available again soon.";
 
 
 
@@ -35,6 +37,9 @@ const Generator = () => {
 
     const handleGenerate = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+        if (!GENERATION_ENABLED) {
+            return toast(GENERATION_STATUS_MESSAGE)
+        }
         if (!user) return toast('Please login to generate')
         if (!productImage || !modelImage || !name || !productName || !aspectRatio)
             return toast('Please fill all the required fields!')
@@ -67,6 +72,12 @@ const Generator = () => {
         <div className="min-h-screen text-white p-6 md:p-12 mt-28">
             <form onSubmit={handleGenerate} className="max-w-4xl mx-auto mb-40">
                 <Title heading="Create In-Context Image" description="Upload your model and product images to generate stunning videos, short-form videos, and social media posts. " />
+
+                {!GENERATION_ENABLED && (
+                    <div className="mb-6 rounded-xl border border-amber-300/30 bg-amber-300/10 p-4 text-amber-100">
+                        <p className="text-sm md:text-base">{GENERATION_STATUS_MESSAGE}</p>
+                    </div>
+                )}
 
                 <div className="flex flex-col items-start gap-8 lg:flex-row lg:gap-16">
                     {/* LEFT COLUMN */}
@@ -116,15 +127,20 @@ const Generator = () => {
                 <div className="mt-10 flex w-full flex-col lg:flex-row lg:gap-16">
                     <div className="hidden lg:block lg:w-60" />
                     <div className="w-full lg:flex-1">
-                        <PrimaryButton disabled={isGenerating} className="w-full max-w-xs justify-center px-10 py-3 rounded-md sm:w-auto disabled:opacity-70 disabled:cursor-not-allowed">
+                        <PrimaryButton disabled={isGenerating || !GENERATION_ENABLED} className="w-full max-w-xs justify-center px-10 py-3 rounded-md sm:w-auto disabled:opacity-70 disabled:cursor-not-allowed">
                             {isGenerating ? (
                                 <>
                                     <Loader2Icon className="size-5 animate-spin" />Generating...
                                 </>)
-                                : (<>
+                                : (!GENERATION_ENABLED ? (
+                                    <>
+                                        <Wand2Icon className="size-5" />
+                                        Generation Temporarily Unavailable
+                                    </>
+                                ) : (<>
                                     <Wand2Icon className="size-5" />
                                     Generate Image
-                                </>)}
+                                </>))}
                         </PrimaryButton >
                     </div>
                 </div>

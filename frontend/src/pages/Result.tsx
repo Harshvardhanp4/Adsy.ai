@@ -6,6 +6,8 @@ import { GhostButton, PrimaryButton } from "../components/Buttons"
 import { useAuth, useUser } from "@clerk/react"
 import api from "../config/axios"
 import toast from "react-hot-toast"
+import { dummyGenerations } from "../assets/assets"
+import { DEMO_MODE } from "../config/demo"
 
 
 const Result = () => {
@@ -21,6 +23,14 @@ const Result = () => {
     const [isGenerating, setIsGenerating] = useState(false)
 
     const fetchProjectData = async () => {
+        if (DEMO_MODE) {
+            const demoProject = dummyGenerations.find((item) => item.id === projectId) || dummyGenerations[0];
+            setProjectData(demoProject)
+            setIsGenerating(false)
+            setLoading(false)
+            return
+        }
+
         try {
             const token = await getToken()
             const { data } = await api.get(`/api/user/projects/${projectId}`, {
@@ -37,6 +47,11 @@ const Result = () => {
 
 
     const handleGenerateVideo = async () => {
+        if (DEMO_MODE) {
+            toast('Video generation is disabled in demo mode. Showing sample outputs.')
+            return
+        }
+
         setIsGenerating(true);
         try {
 
@@ -54,18 +69,27 @@ const Result = () => {
 
 
     useEffect(() => {
+        if (DEMO_MODE) {
+            fetchProjectData()
+            return
+        }
+
         if (user && !project.id) {
             fetchProjectData()
         } else if (isLoaded && !user) {
             navigate('/')
         }
 
-    }, [user])
+    }, [user, isLoaded, project.id])
 
 
     //fetch project every 10 secs
 
     useEffect(() => {
+        if (DEMO_MODE) {
+            return
+        }
+
         if (user && isGenerating) {
             const interval = setInterval(() => { fetchProjectData() }, 10000)
             return () => clearInterval(interval);

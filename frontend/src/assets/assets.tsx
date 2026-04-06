@@ -6,8 +6,10 @@ import product4 from './product4.jpg'; // headphone
 import product5 from './product5.jpg'; // speaker
 import product6 from './product6.jpg'; // sneakers
 import product7 from './product7.png'; // trolly bag
+import productDemo from './product_demo.jpg'; // demo product image
 import model1 from './model1.png'; // model men
 import model2 from './model2.jpg'; // model women
+import modelDemo from './model_demo.png'; // demo model image
 import generated1 from './generated1.png'; // men with trolly bag
 import generated2 from './generated2.png'; // women with trolly bag
 import generated3 from './generated3.png'; // men with shoes
@@ -57,11 +59,11 @@ export const dummyGenerations = [
         productDescription: 'Stylish White Sneakers',
         productName: 'Sneakers',
         targetLength: 10,
-        uploadedImages: [product6, model2],
+        uploadedImages: [productDemo, modelDemo],
         userId: 'user_2',
         userPrompt: 'Showcase the sneakers in a dynamic and fashionable way',
-        generatedImage: generated4,
-        generatedVideo: generatedVideo2,
+        generatedImage: productDemo,
+        generatedVideo: generatedVideo1,
         isGenerating: false,
         isPublished: true,
         createdAt: '2023-03-16T00:00:00.000Z',
